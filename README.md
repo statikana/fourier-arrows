@@ -1,4 +1,4 @@
-# fourier-anim
+# fourier-arrows
 
 A small [Manim](https://www.manim.community/) + [SymPy](https://www.sympy.org/) script that computes complex Fourier series coefficients for a 2D parametric curve $f(t) = x(t) + i\,y(t)$ over $t \in [0, 1]$ and animates the resulting rotating epicycle arrows.
 
