@@ -7,14 +7,17 @@ a = 1
 kx = 5
 ky = 3
 
-x = cos(2*PI*t) + 1
-y = sin(2 * PI * t)
-
+# Parametric curve over t in [0, 1]
+x = t
+y = 2 * t
+ 
+# probably don't change this
 f_t = x + I * y
-n_terms = 11
+n_terms = 11  # must be odd for symmetric negative/positive frequencies
 expr = Expression(f_t=f_t, n_terms=n_terms)
 
 class FourierConstruct(MovingCameraScene):
+    """Renders rotating Fourier epicycle arrows approximating f_t."""
     def construct(self):
         font_size = DEFAULT_FONT_SIZE // 1.5
         expr.set_coefs()
@@ -59,6 +62,7 @@ class FourierConstruct(MovingCameraScene):
 
         def update_time(mobject: Mobject) -> None:
             t = round((self.time / run_time) % 1, 3)
+            # Drop leading "0" so values render as ".000" .. ".999"
             string = str(t)[1:].ljust(4, '0')
             new = Text("Time: " + string, font="Cascadia Mono", font_size=font_size)
 
@@ -164,6 +168,7 @@ class FourierConstruct(MovingCameraScene):
         return arrows
     
     def func_to_latex(self, func: Expr) -> str:
+        """Converts a SymPy expression to LaTeX, restoring symbolic pi/2pi from floats."""
         ltx = latex(func)
         for digit in reversed(range(10, 17)):
             ltx = ltx.replace(str(round(PI, digit)), "\\pi").replace(str(round(TAU, digit)), "2\\pi")

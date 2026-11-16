@@ -38,6 +38,7 @@ class Term:
         return f"{self.coef or '__'}e^[{self.n}*2π*t*i]"
 
 class Expression:
+    """Decomposes a complex parametric function f_t into symmetric Fourier terms over t in [0, 1]."""
     def __init__(self, *, f_t: Expr, n_terms: int) -> None:
         self.f = f_t
         self.n_terms = n_terms
